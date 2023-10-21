@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LoanPay Pro</title>
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap');
+    body {
+      margin: 0px;
+      padding: 10px;
+    }
+
+    .container {
+      font-family: 'Outfit', sans-serif;
+      padding: 0.5rem;
+      background: #639363;
+      border-radius: 10px 10px 0 0;
+    }
+
+    #title {
+      font-family: 'Fredericka the Great', serif;
+      text-align: center;
+      color: green;
+    }
+
+    input[type="number"],
+    select {
+      display: block;
+      margin-bottom: 10px;
+      width: 98%;
+      height: 25px;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    select {
+      font-weight: normal;
+      font-size: 15px;
+      text-align: center;
+    }
+
+    #calc {
+      display: block;
+      margin: 0 auto;
+      width: 150px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 20px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    #calc:hover {
+      background-color: #45A049;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: center;
+    } 
+    
+    #results {
+      margin-top:25px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="title">LoanPay Pro</h1>
+  <div class="container">
+    <label for="loanAmount">Loan Amount</label>
+    <input type="number" id="loanAmount">
+    <label for="numberYears">Years to repay</label>
+    <select id="numberYears">
+      <option value="opt">--Select---</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option>
+      <option value="19">19</option>
+      <option value="20">20</option>
+      <option value="21">21</option>
+      <option value="22">22</option>
+      <option value="23">23</option>
+      <option value="24">24</option>
+      <option value="25">25</option>
+      <option value="26">26</option>
+      <option value="27">27</option>
+      <option value="28">28</option>
+      <option value="29">29</option>
+      <option value="30">30</option>
+    </select>
+    <label for="interest">Interest</label>
+    <input type="number" id="interest">
+    <button id="calc">Calculate</button>
+    
+    <div id="results"></div>
+  </div>
+  
+
+  <script>
+    document.getElementById("calc").addEventListener("click", calculatePayment);
+
+    function calculatePayment() {
+      const loanAmount = parseFloat(document.getElementById("loanAmount").value);
+      const numberOfYears = parseInt(document.getElementById("numberYears").value);
+      const interestRate = parseFloat(document.getElementById("interest").value);
+
+      if (isNaN(loanAmount) || isNaN(numberOfYears) || isNaN(interestRate)) {
+        document.getElementById("results").textContent = "Please enter valid numbers.";
+        return;
+      }
+
+      const monthlyInterestRate = interestRate / 1200;
+      const numberOfPayments = numberOfYears * 12;
+      const monthlyPayment =
+        (loanAmount * monthlyInterestRate) /
+        (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+
+      // Display the result
+      document.getElementById("results").textContent = `Monthly Payment: R${monthlyPayment.toFixed(2)}`;
+
+      // Create a table with outstanding balance and years remaining
+      let tableHTML = "<table>";
+      tableHTML += "<tr><th>Month</th><th>Outstanding Balance</th><th>Years Remaining</th></tr>";
+
+      let balance = loanAmount;
+      for (let month = 1; month <= numberOfPayments; month++) {
+        balance -= monthlyPayment - balance * monthlyInterestRate;
+        const yearsRemaining = numberOfYears - Math.floor(month / 12);
+        tableHTML += `<tr><td>${month}</td><td>R${balance.toFixed(2)}</td><td>${yearsRemaining}</td></tr>`;
+      }
+
+      tableHTML += "</table>";
+
+      // Append the table to the results div
+      document.getElementById("results").innerHTML += tableHTML;
+    }
+  </script>
+</body>
+  </html>
