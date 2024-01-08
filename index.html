@@ -21,8 +21,10 @@
                flex-direction: column;
                font-size: 1rem;
                color: #ffffff;
-               background: linear-gradient(180deg, #001, #012, #585853, #ff9);
+               background: #273936;
+               background-repeat: no-repeat;
                max-width: calc(100% - 10px);
+               min-height: 100vh;
             }
             
             h1{
@@ -30,7 +32,7 @@
                    text-align: center;
                    text-transform:uppercase;
                    font-size: 38px;
-                   background: linear-gradient(180deg, #529303 60%, #173936 40%);
+                   background: linear-gradient(180deg, #529303 60%, #fff 40%);
                    background-clip: text;
                    color: transparent;
             }
@@ -42,7 +44,8 @@
                 background:#585853;
                 box-shadow: 2px 2px 3px #001;
                 border-radius: 15px;
-                min-width: 85%;
+                margin-left: 10px;
+                width:calc(100% - 10px);
                 
                 .emphasize {
                     font-family: Courier New;
@@ -118,7 +121,11 @@
             }
             #errorMessage {
               font-family: Monospace;
-              font-size: 1.5rem;
+              padding: 10px;
+              border-radius: 15px;
+              text-align: center;
+              background: #fff;
+              font-size: 1rem;
               color:red;
             }
             table {
@@ -143,9 +150,9 @@
   </style>
 </head>
 <body>
- 
+     <h1 id="title">LoanPay Pro</h1>
   <div class="container">
-       <h1 id="title">LoanPay Pro</h1>
+   
   <div class="form">
           <label for="loanAmount">Loan Amount</label>
     <input type="text" id="loanAmount">
@@ -202,7 +209,10 @@
       const interestRate = parseFloat(document.getElementById("interest").value);
 
       if (isNaN(loanAmount) || isNaN(numberOfYears) || isNaN(interestRate)) {
-        document.getElementById("results").textContent = "Please enter valid numbers.";
+        document.getElementById("results").innerHTML = `<p id="errorMessage">Please enter valid numbers</p>`;
+        return;
+      } if(loanAmount <= 0 || interestRate <= 0){
+          document.getElementById("results").innerHTML = `<p id="errorMessage">Loan Amount or Interest Rate cannot be less than 1</p>`;
         return;
       }
 
