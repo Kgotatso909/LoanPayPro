@@ -1,68 +1,133 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoanPay Pro</title>
   <style type="text/css">
     @import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap');
-    body {
-      margin: 0px;
-      padding: 10px;
-    }
-
-    .container {
-      font-family: 'Outfit', sans-serif;
-      padding: 0.5rem;
-      background: #639363;
-      border-radius: 10px 10px 0 0;
-    }
-
-    #title {
-      font-family: 'Fredericka the Great', serif;
-      text-align: center;
-      color: green;
-    }
-
-    input[type="number"],
-    select {
-      display: block;
-      margin-bottom: 10px;
-      width: 98%;
-      height: 25px;
-      font-size: 25px;
-      font-weight: 800;
-    }
-
-    select {
-      font-weight: normal;
-      font-size: 15px;
-      text-align: center;
-    }
-
-    #calc {
-      display: block;
-      margin: 0 auto;
-      width: 150px;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 20px;
-      border: none;
-      border-radius: 5px;
-      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-      cursor: pointer;
-    }
-
-    #calc:hover {
-      background-color: #45A049;
-    }
-
-    table {
-      width: 100%;
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+               
+               background: linear-gradient(0deg); 
+               display: flex;
+               align-items: center;
+               flex-flow: wrap;
+               flex-direction: column;
+               font-size: 1rem;
+               color: #ffffff;
+               background: linear-gradient(180deg, #001, #012, #585853, #ff9);
+               max-width: calc(100% - 10px);
+            }
+            
+            h1{
+                   font-family: Courier New;
+                   text-align: center;
+                   text-transform:uppercase;
+                   font-size: 38px;
+                   background: linear-gradient(180deg, #529303 60%, #173936 40%);
+                   background-clip: text;
+                   color: transparent;
+            }
+            
+            .container {
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                background:#585853;
+                box-shadow: 2px 2px 3px #001;
+                border-radius: 15px;
+                min-width: 85%;
+                
+                .emphasize {
+                    font-family: Courier New;
+                }
+                
+                #formula {
+                    font-size: 25px;
+                    font-weight: 700;
+                    text-align: center;
+                }
+                
+                .discription {
+                    padding: 10px;
+                    margin: 10px 0px 10px 25px;
+                    border-left: 3px solid blue;
+                    font-size: 1.5rem;
+                    font-family:Monospace;
+                }
+                
+                .form {
+                    padding: 10px;
+                    max-width: calc(100% - 10px);
+                   
+                
+                    label {
+                      display: block;
+                      margin-left: 15px;
+                      font-family: Monospace;
+                      font-size: 18px;
+                      font-weight: 700;
+                    }
+                    
+                    input[type="text"], select{
+                        display: block;
+                        background-color: #303134;
+                        padding: 5px;
+                        margin-bottom: 15px;
+                        width: calc(100% - 10px);
+                        height: clamp(30px,45px,85px);
+                        font-size:clamp(25px,30px,80px);
+                        border: none;
+                        border-bottom:3px solid #3c4043;
+                        border-radius: 15px;
+                        outline:none;
+                        color:#fff;
+                    }
+                    
+                    input[type="text"]:focus {
+                        border:none;
+                        border-bottom:2px solid black;
+                        padding:10px;
+                        box-shadow:2px 2px 3px #001;
+                    }
+                    
+                    #calcBtn {
+                        padding: px;
+                        width: calc(100% - 10px);
+                        height: clamp(30px,45px,85px);
+                        border-radius:8px;
+                        border: none;
+                        box-shadow: inset -2px -2px 3px gray, 2px 2px 3px #001;
+                        font-weight: 600;
+                        font-family: Courier;
+                        font-size:clamp(30px,45px,85px);
+                    }
+                    
+                    #calcBtn:active {
+                        box-shadow: inset -2px -2px 3px gray, 1px 1px 1px #001;
+                   }
+                   
+                }
+               
+            }
+            #errorMessage {
+              font-family: Monospace;
+              font-size: 1.5rem;
+              color:red;
+            }
+            table {
+      min-width: calc(100% - 8px);
       border-collapse: collapse;
     }
 
     table, th, td {
-      border: 1px solid black;
+      border: 1px solid black; no
     }
 
     th, td {
@@ -73,13 +138,17 @@
     #results {
       margin-top:25px;
     }
+    
+    
   </style>
 </head>
 <body>
-  <h1 id="title">LoanPay Pro</h1>
+ 
   <div class="container">
-    <label for="loanAmount">Loan Amount</label>
-    <input type="number" id="loanAmount">
+       <h1 id="title">LoanPay Pro</h1>
+  <div class="form">
+          <label for="loanAmount">Loan Amount</label>
+    <input type="text" id="loanAmount">
     <label for="numberYears">Years to repay</label>
     <select id="numberYears">
       <option value="opt">--Select---</option>
@@ -115,15 +184,17 @@
       <option value="30">30</option>
     </select>
     <label for="interest">Interest</label>
-    <input type="number" id="interest">
-    <button id="calc">Calculate</button>
+    <input type="text" id="interest">
+    <button id="calcBtn">Calculate</button>
+  </div>
+
     
     <div id="results"></div>
   </div>
   
 
   <script>
-    document.getElementById("calc").addEventListener("click", calculatePayment);
+    document.getElementById("calcBtn").addEventListener("click", calculatePayment);
 
     function calculatePayment() {
       const loanAmount = parseFloat(document.getElementById("loanAmount").value);
@@ -146,13 +217,14 @@
 
       // Create a table with outstanding balance and years remaining
       let tableHTML = "<table>";
-      tableHTML += "<tr><th>Month</th><th>Outstanding Balance</th><th>Years Remaining</th></tr>";
-
+      tableHTML += "<tr><th>Month</th><th>Outstanding Balance</th><th>Amount Paid</th></tr>";
+      
+      let amountPaid = 0;
       let balance = loanAmount;
       for (let month = 1; month <= numberOfPayments; month++) {
         balance -= monthlyPayment - balance * monthlyInterestRate;
-        const yearsRemaining = numberOfYears - Math.floor(month / 12);
-        tableHTML += `<tr><td>${month}</td><td>R${balance.toFixed(2)}</td><td>${yearsRemaining}</td></tr>`;
+         amountPaid += monthlyPayment;
+        tableHTML += `<tr><td>${month}</td><td>R${balance.toFixed(2)}</td><td>${amountPaid.toFixed(2)}</td></tr>`;
       }
 
       tableHTML += "</table>";
